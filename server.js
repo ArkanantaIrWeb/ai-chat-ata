@@ -65,6 +65,6 @@ app.post('/chat', async (req, res) => {
 });
 
 // 6. Jalankan server
-app.listen(PORT, () => {
-  console.log(`Server berjalan di http://localhost:${PORT}`);
+app.listen(PORT, '0.0.0.0', () => { // <-- TAMBAHIN INI ('0.0.0.0')
+  console.log(`Server BERHASIL berjalan di port ${PORT}`);
 });
