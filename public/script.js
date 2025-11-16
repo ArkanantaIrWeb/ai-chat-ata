@@ -118,7 +118,9 @@ chatForm.addEventListener('submit', async (e) =>{
 
 // Pesan sambutan pertama kali (DIREVISI agar pakai format)
 window.addEventListener('load', () => {
-    // Kita panggil fungsi appendMessageText yang sudah pintar
-    appendMessageText("Halo Arka! Saya asisten AI pribadi Anda. Bagaimana saya bisa membantu hari ini?", 'bot');
-    // Kita tidak simpan ini di history
+    // Sapaan publik baru
+    const welcomeMessage = "Halo! Saya Ata AI, asisten AI yang dibuat oleh Arkananta. Ada yang bisa saya bantu?";
+    
+    appendMessageText(welcomeMessage, 'bot');
+    // Kita tidak simpan ini di history, agar AI tidak bingung
 });
