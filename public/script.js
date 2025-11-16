@@ -95,7 +95,7 @@ chatForm.addEventListener('submit', async (e) =>{
     showTypingIndicator();
 
     try{
-        const resp = await fetch('http://localhost:3000/chat', {
+        const resp = await fetch('/chat', {
             method: 'POST', 
             headers:{ 'Content-Type':'application/json' },
             body: JSON.stringify({ messages: chatHistory })
