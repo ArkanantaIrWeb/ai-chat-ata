@@ -6,7 +6,7 @@ const axios = require('axios');
 
 // 2. Buat aplikasi Express
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 // 3. Terapkan middleware
 app.use(cors());
