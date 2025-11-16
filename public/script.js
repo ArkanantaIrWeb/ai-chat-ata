@@ -13,6 +13,15 @@ function el(tag, classes = []){
     return e;
 }
 
+// --- FUNGSI BARU: "Jaring Pengaman" Sederhana ---
+// Ini adalah "penerjemah" level 1 kita
+function simpleFormat(text) {
+    let formattedText = text.replace(/\*\*(.*?)\*\*/g, '<b>$1</b>'); // Handle **bold**
+    formattedText = formattedText.replace(/\*(.*?)\*/g, '<i>$1</i>');     // Handle *italic*
+    formattedText = formattedText.replace(/\n/g, '<br>');               // Handle new lines
+    return formattedText;
+}
+
 // FUNGSI DIREVISI: Menggunakan .innerHTML untuk bot (tapi super aman)
 function appendMessageText(text, sender = 'bot'){
     const wrapper = el('div', ['message', `${sender}-message`]);
@@ -23,20 +32,19 @@ function appendMessageText(text, sender = 'bot'){
     
     const info = el('div', ['info']);
     
-    // --- PERUBAHAN ANTI-GAGAL ---
+    // --- PERUBAHAN ANTI-GAGAL v2 ---
     if (sender === "user") {
         // 1. Untuk user, SELALU pakai .textContent (AMAN)
         info.textContent = text;
     } else {
         // 2. Untuk bot, kita "CEK DULU"
         if (typeof marked !== 'undefined' && typeof DOMPurify !== 'undefined') {
-            // JALAN NORMAL (jika library sukses ke-load)
+            // JALAN NORMAL (level 10: Marked.js + DOMPurify)
             info.innerHTML = DOMPurify.sanitize(marked.parse(text));
         } else {
-            // JALAN AMAN (jika library gagal ke-load, seenggaknya nggak crash)
-            console.error("Marked.js atau DOMPurify gagal di-load!");
-            // Kita pake cara "gepeng" darurat (tapi nggak crash)
-            info.innerHTML = text.replace(/\n/g, '<br>');
+            // JALAN AMAN (level 1: "Jaring Pengaman" Sederhana)
+            console.warn("Marked.js/DOMPurify gagal load. Pake fallback simpleFormat.");
+            info.innerHTML = simpleFormat(text); // Pake jaring pengaman kita yang pinter
         }
     }
     // --- AKHIR PERUBAHAN ---
@@ -60,12 +68,11 @@ function showTypingIndicator(){
     const avatar = el('div', ['avatar']); 
     avatar.textContent = 'AI';
     
-    // REVISI: Buat .typing-indicator sebagai elemen sendiri
     const indicator = el('div', ['typing-indicator']);
     indicator.innerHTML = '<span></span><span></span><span></span>';
     
     meta.appendChild(avatar);
-    meta.appendChild(indicator); // Tambahkan .typing-indicator, BUKAN .info
+    meta.appendChild(indicator);
     wrap.appendChild(meta);
     chatMessages.appendChild(wrap);
     chatMessages.scrollTop = chatMessages.scrollHeight;
@@ -83,18 +90,14 @@ chatForm.addEventListener('submit', async (e) =>{
     const message = userInput.value.trim();
     if (!message) return;
 
-    // 1. Tampilkan & simpan pesan user
     appendMessageText(message, 'user');
     chatHistory.push({ role: 'user', content: message });
-
     userInput.value = '';
     userInput.focus();
-
     showTypingIndicator();
 
     try{
-        // 2. Kirim riwayat ke backend
-        const resp = await fetch('/chat', { // (Pastikan ini udah /chat, bukan localhost)
+        const resp = await fetch('/chat', {
             method: 'POST', 
             headers:{ 'Content-Type':'application/json' },
             body: JSON.stringify({ messages: chatHistory })
@@ -104,11 +107,8 @@ chatForm.addEventListener('submit', async (e) =>{
         if (!resp.ok) throw new Error('Server error');
         
         const data = await resp.json();
-        
-        // 3. Tampilkan & simpan balasan AI
         appendMessageText(data.reply, 'bot');
         chatHistory.push({ role: 'assistant', content: data.reply });
-
     } catch(err){
         hideTypingIndicator();
         console.error(err);
@@ -116,11 +116,10 @@ chatForm.addEventListener('submit', async (e) =>{
     }
 });
 
-// Pesan sambutan pertama kali (DIREVISI agar "Sabar")
+// Pesan sambutan pertama kali (Pake "tunda" 100ms)
 window.addEventListener('load', () => {
-    // Kita "tunda" 100 milidetik. Kasih napas buat CDN.
     setTimeout(() => {
-        const welcomeMessage = "Halo! Saya Ata AI, asisten AI yang dibuat oleh Arkananta. Ada yang bisa saya bantu?";
+        const welcomeMessage = "Halo! Saya **Ata AI**, asisten AI yang dibuat oleh **Arkananta**. Ada yang bisa saya bantu?";
         appendMessageText(welcomeMessage, 'bot');
     }, 100); 
 });
