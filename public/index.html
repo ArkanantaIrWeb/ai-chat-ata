@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ata AI Chatbot</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+</head>
+<body>
+
+    <div class="gradient-bg"></div>
+
+    <div class="chat-container">
+        
+        <header class="chat-header">
+            <div class="brand">
+                <div class="logo">AI</div>
+                <div class="titles">
+                    <h1>Ata AI</h1>
+                    <p class="subtitle">Personal Assistant v1.0</p>
+                </div>
+            </div>
+            </header>
+
+        <main class="chat-messages" id="chat-messages">
+            </main>
+
+        <footer class="chat-input-form">
+            <form id="chat-form">
+                <input 
+                    type="text" 
+                    id="user-input" 
+                    placeholder="Kirim pesan ke Ata AI..." 
+                    autocomplete="off" 
+                    required 
+                />
+                <button type="submit" aria-label="Kirim Pesan">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </form>
+        </footer>
+    </div>
+
+</body>
+</html>

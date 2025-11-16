@@ -1,0 +1,177 @@
+/* 1. Pengaturan Global & Font */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f0f2f5;
+}
+
+/* 2. Pembungkus Utama Aplikasi Chat */
+.chat-container {
+    width: 100%;
+    max-width: 600px; /* Lebar maksimal di desktop */
+    height: 90vh; /* Tinggi 90% dari layar */
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    
+    /* Ini kuncinya: Flexbox! */
+    display: flex;
+    flex-direction: column; /* Mengatur item (header, messages, input) secara vertikal */
+}
+
+/* 3. Header (Judul) */
+.chat-header {
+    padding: 20px;
+    background-color: #007bff; /* Biru cerah */
+    color: white;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    text-align: center;
+}
+
+.chat-header h1 {
+    font-size: 1.5rem;
+    margin-bottom: 4px;
+}
+
+/* 4. Area Pesan (Tempat gelembung chat) */
+.chat-messages {
+    flex-grow: 1; /* Mengisi semua ruang sisa (ini penting!) */
+    padding: 20px;
+    overflow-y: auto; /* Jika pesan penuh, bisa di-scroll */
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* Jarak antar gelembung pesan */
+}
+
+/* 5. Gelembung Pesan */
+.message {
+    padding: 12px 16px;
+    border-radius: 18px;
+    max-width: 80%;
+    line-height: 1.5;
+    
+    /* TAMBAHKAN BARIS INI */
+    animation: fadeInSlideUp 0.3s ease-out forwards;
+}
+
+.bot-message {
+    background-color: #e9e9eb; /* Abu-abu untuk bot */
+    color: #0c0c0c;
+    align-self: flex-start; /* Pesan bot rata kiri */
+    border-bottom-left-radius: 4px;
+}
+
+.user-message {
+    background-color: #007bff; /* Biru untuk user */
+    color: white;
+    align-self: flex-end; /* Pesan user rata kanan */
+    border-bottom-right-radius: 4px;
+}
+
+/* 6. Form Input Pesan (Footer) */
+.chat-input-form {
+    border-top: 1px solid #ddd;
+    padding: 15px;
+}
+
+#chat-form {
+    display: flex;
+    gap: 10px; /* Jarak antara input dan tombol */
+}
+
+#user-input {
+    flex-grow: 1; /* Input mengambil sisa ruang */
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    font-size: 1rem;
+}
+
+#user-input:focus {
+    outline: none;
+    border-color: #007bff;
+}
+
+#chat-form button {
+    padding: 0 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+#chat-form button:hover {
+    background-color: #0056b3; /* Warna lebih gelap saat disentuh */
+}
+
+/* 7. Indikator Typing (BARU) */
+.typing-indicator {
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+/* Animasi 3 titik */
+.typing-indicator span {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: #909090;
+    
+    /* Panggil animasi 'blink' */
+    animation: blink 1.4s infinite both;
+}
+
+/* Atur delay animasi untuk tiap titik */
+.typing-indicator span:nth-of-type(2) {
+    animation-delay: 0.2s;
+}
+
+.typing-indicator span:nth-of-type(3) {
+    animation-delay: 0.4s;
+}
+
+/* Definisikan @keyframes untuk 'blink' */
+@keyframes blink {
+    0% {
+        opacity: 0.2;
+    }
+    20% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0.2;
+    }
+}
+
+/* 8. Animasi Pesan Masuk (BARU) */
+@keyframes fadeInSlideUp {
+    from {
+        /* Mulai dari transparan */
+        opacity: 0;
+        /* Mulai dari sedikit di bawah posisi aslinya */
+        transform: translateY(10px);
+    }
+    to {
+        /* Berakhir di posisi solid (terlihat) */
+        opacity: 1;
+        /* Berakhir di posisi normal */
+        transform: translateY(0);
+    }
+}

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Chat App</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+</head>
+<body>
+
+    <div class="chat-container">
+        <header class="chat-header">
+            <h1>AI Chat</h1>
+            <p>Dibangun oleh Arkananta</p>
+        </header>
+
+        <main class="chat-messages" id="chat-messages">
+            <div class="message bot-message">
+                <p>Halo! Saya AI yang siap membantu. Apa yang ingin kamu tanyakan?</p>
+            </div>
+        </main>
+
+        <footer class="chat-input-form">
+            <form id="chat-form">
+                <input 
+                    type="text" 
+                    id="user-input" 
+                    placeholder="Ketik pesanmu di sini..." 
+                    autocomplete="off" 
+                    required 
+                />
+                <button type="submit">Kirim</button>
+            </form>
+        </footer>
+    </div>
+
+</body>
+</html>
